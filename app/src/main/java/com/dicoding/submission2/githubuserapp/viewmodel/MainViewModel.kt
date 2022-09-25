@@ -1,5 +1,6 @@
 package com.dicoding.submission2.githubuserapp.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -18,6 +19,7 @@ class MainViewModel : ViewModel() {
 
     private val _search = MutableLiveData<List<ItemsItem>>()
     val search: LiveData<List<ItemsItem>> = _search
+
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
     private val _detailUser = MutableLiveData<DetailUserResponse>()
@@ -27,13 +29,9 @@ class MainViewModel : ViewModel() {
     private val _following = MutableLiveData<List<ItemsItem>?>(null)
     val following: LiveData<List<ItemsItem>?> = _following
 
-    init {
-        findItems()
-    }
-
-    private fun findItems() {
+    fun findItems(context: Context) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getSearchData(USERNAME)
+        val client = ApiConfig.getApiService(context).getSearchData(USERNAME)
         client.enqueue(object : Callback<SearchResponse> {
             override fun onResponse(
                 call: Call<SearchResponse>,
@@ -54,9 +52,9 @@ class MainViewModel : ViewModel() {
         })
     }
 
-    fun searchUser(dataUsers: String) {
+    fun searchUser(context: Context, dataUsers: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getSearchData(dataUsers)
+        val client = ApiConfig.getApiService(context).getSearchData(dataUsers)
         client.enqueue(object : Callback<SearchResponse> {
             override fun onResponse(
                 call: Call<SearchResponse>,
@@ -77,9 +75,9 @@ class MainViewModel : ViewModel() {
         })
     }
 
-    fun getDetailUser(dataUsers: String) {
+    fun getDetailUser(context: Context, dataUsers: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getDetailUserData(dataUsers)
+        val client = ApiConfig.getApiService(context).getDetailUserData(dataUsers)
         client.enqueue(object : Callback<DetailUserResponse>{
             override fun onResponse(
                 call: Call<DetailUserResponse>,
@@ -100,9 +98,9 @@ class MainViewModel : ViewModel() {
         })
     }
 
-    fun getFollowersData(dataUsers: String) {
+    fun getFollowersData(context: Context, dataUsers: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getFollowersUserData(dataUsers)
+        val client = ApiConfig.getApiService(context).getFollowersUserData(dataUsers)
         client.enqueue(object : Callback<List<ItemsItem>>{
             override fun onResponse(
                 call: Call<List<ItemsItem>>,
@@ -122,14 +120,15 @@ class MainViewModel : ViewModel() {
         })
     }
 
-    fun getFollowingData(dataUsers: String) {
+    fun getFollowingData(context: Context, dataUsers: String) {
         _isLoading.value = true
-        val client = ApiConfig.getApiService().getFollowingUserData(dataUsers)
+        val client = ApiConfig.getApiService(context).getFollowingUserData(dataUsers)
         client.enqueue(object : Callback<List<ItemsItem>>{
             override fun onResponse(
                 call: Call<List<ItemsItem>>,
                 response: Response<List<ItemsItem>>
             ) {
+                _isLoading.value = false
                 if (response.isSuccessful){
                     _following.value = response.body()
                 } else {

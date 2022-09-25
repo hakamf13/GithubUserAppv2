@@ -43,7 +43,7 @@ class DetailActivity : AppCompatActivity() {
             showLoading(loader)
         }
 
-        detailMainViewModel.getDetailUser(detailUsers)
+        detailMainViewModel.getDetailUser(this, detailUsers)
     }
 
     private fun getUserData(userItems: DetailUserResponse){

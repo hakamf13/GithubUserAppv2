@@ -30,7 +30,7 @@ class FollowersFragment : Fragment() {
         followersViewModel.followers.observe(viewLifecycleOwner) { followersData ->
             if (followersData == null) {
                 val dataUsers = arguments?.getString(USERNAME)?:""
-                followersViewModel.getFollowersData(dataUsers)
+                followersViewModel.getFollowersData(requireActivity(), dataUsers)
             } else {
                 showFollowers(followersData)
             }
