@@ -9,7 +9,7 @@ import retrofit2.http.*
 
 interface ApiService {
     @GET("search/users")
-    @Headers("Authorization: token $TOKEN")
+    @Headers("Authorization: $TOKEN")
     fun getSearchData(
         @Query("q") query: String
     ): Call<SearchResponse>

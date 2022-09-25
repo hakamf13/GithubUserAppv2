@@ -1,15 +1,15 @@
 package com.dicoding.submission2.githubuserapp.ui.follow
 
+//import com.dicoding.submission2.githubuserapp.adapter.ListUserAdapter
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.submission2.githubuserapp.adapter.FollowsAdapter
-//import com.dicoding.submission2.githubuserapp.adapter.ListUserAdapter
 import com.dicoding.submission2.githubuserapp.databinding.FragmentFollowingBinding
 import com.dicoding.submission2.githubuserapp.datasource.ItemsItem
 import com.dicoding.submission2.githubuserapp.token.ConstantToken
@@ -27,10 +27,10 @@ class FollowingFragment : Fragment() {
     ): View {
         binding = FragmentFollowingBinding.inflate(inflater, container, false)
 
-        followingViewModel.followers.observe(viewLifecycleOwner) { followingData ->
+        followingViewModel.following.observe(viewLifecycleOwner) { followingData ->
             if (followingData == null) {
-                val dataUsers = arguments?.getString(USERNAME)?:""
-                followingViewModel.getFollowingData(dataUsers)
+                val dataUsers = arguments?.getString(USERNAME) ?: ""
+                followingViewModel.getFollowingData(requireActivity(), dataUsers)
             } else {
                 showFollowing(followingData)
             }

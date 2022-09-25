@@ -40,6 +40,9 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.isLoading.observe(this) { loader ->
             showLoading(loader)
         }
+
+        mainViewModel.findItems(this)
+
     }
 
     private fun setUserData(userItems: List<ItemsItem>) {
@@ -71,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         searchView.queryHint = resources.getString(R.string.search_hint)
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                mainViewModel.searchUser(query)
+                mainViewModel.searchUser(this@MainActivity, query)
                 searchView.clearFocus()
                 return true
             }
