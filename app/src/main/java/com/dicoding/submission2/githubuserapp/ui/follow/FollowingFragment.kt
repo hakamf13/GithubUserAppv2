@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicoding.submission2.githubuserapp.adapter.FollowsAdapter
+import com.dicoding.submission2.githubuserapp.adapter.ListUserAdapter
 import com.dicoding.submission2.githubuserapp.databinding.FragmentFollowingBinding
 import com.dicoding.submission2.githubuserapp.datasource.ItemsItem
 import com.dicoding.submission2.githubuserapp.token.ConstantToken
@@ -43,9 +43,9 @@ class FollowingFragment : Fragment() {
 
     private fun showFollowing(dataUsers: List<ItemsItem>) {
         binding.rvFollowing.layoutManager = LinearLayoutManager(activity)
-        val userAdapter = FollowsAdapter(dataUsers)
+        val userAdapter = ListUserAdapter(dataUsers)
         binding.rvFollowing.adapter = userAdapter
-        userAdapter.setOnItemClickCallback(object : FollowsAdapter.OnItemClickCallback {
+        userAdapter.setOnItemClickCallback(object : ListUserAdapter.OnItemClickCallback {
             override fun onItemClicked(data: ItemsItem) {
                 val intent = Intent(activity, DetailActivity::class.java)
                 intent.putExtra(ConstantToken.EXTRA_DETAIL, data.login)
